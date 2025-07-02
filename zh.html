@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingest2AI - 一键将网页发送到 ChatGPT</title>
+    <meta name="description" content="Ingest2AI 帮助您将任何网页即时发送到 ChatGPT，用于智能摘要、关键词提取和深度洞察。为研究人员、专业人士和 AI 深度用户提供一键集成服务。">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ingest2AI - 一键将网页发送到 ChatGPT">
+    <meta property="og:description" content="网页内容与 AI 分析之间的一键桥梁。通过即时 ChatGPT 集成变革您的阅读工作流程。">
+    <meta property="og:image" content="./assets/Ingest2AI.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ingest2AI - 一键将网页发送到 ChatGPT">
+    <meta name="twitter:description" content="网页内容与 AI 分析之间的一键桥梁。通过即时 ChatGPT 集成变革您的阅读工作流程。">
+    <meta name="twitter:image" content="./assets/Ingest2AI.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Inter Font + Chinese Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#E6F2FF',
+                            100: '#CCE5FF',
+                            500: '#0066FF',
+                            600: '#0052CC',
+                            700: '#003D99'
+                        },
+                        gray: {
+                            50: '#F8F9FA',
+                            100: '#F1F3F5',
+                            200: '#E9ECEF',
+                            300: '#CED4DA',
+                            400: '#ADB5BD',
+                            500: '#6C757D',
+                            600: '#495057',
+                            700: '#343A40',
+                            800: '#212529',
+                            900: '#1A1A1A'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out'
+                    }
+                }
+            },
+            darkMode: 'class'
+        }
+    </script>
+    
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+        }
+    </style>
+</head>
+<body class="font-inter bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+    
+    <!-- Header -->
+    <header class="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-50 transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-link text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-semibold text-gray-900 dark:text-white">Ingest2AI</span>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <a href="./index.html" class="text-sm text-gray-600 dark:text-gray-300 hover:text-primary-500 transition-colors duration-200">
+                        English
+                    </a>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <i class="fas fa-sun dark:hidden text-gray-600"></i>
+                        <i class="fas fa-moon hidden dark:block text-gray-300"></i>
+                    </button>
+                    
+                    <!-- CTA Button -->
+                    <a href="#download" class="hidden sm:inline-flex items-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105">
+                        <i class="fas fa-download mr-2"></i>
+                        立即安装
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                    一键将网页发送到
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-600">ChatGPT</span>
+                </h1>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+                    通过一键 AI 分析变革您的阅读工作流程。Ingest2AI 帮助您将任何网页即时发送到 ChatGPT，用于智能摘要、关键词提取和深度洞察。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#download" class="inline-flex items-center px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-download mr-3"></i>
+                        免费安装扩展
+                    </a>
+                    <a href="#demo" class="inline-flex items-center px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-500 dark:hover:text-primary-400 font-semibold rounded-xl transition-all duration-200">
+                        <i class="fas fa-play mr-3"></i>
+                        观看演示
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Hero Image -->
+            <div class="relative max-w-5xl mx-auto animate-on-scroll">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
+                    <img src="./assets/Ingest2AI.png" alt="Ingest2AI 扩展界面" class="w-full h-auto object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                    提升您的阅读工作流程
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    专为研究人员、专业人士和 AI 深度用户打造，让 ChatGPT 成为您的个人阅读助手和知识库。
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll border border-gray-200 dark:border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">简化内容消化</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        消除复制粘贴 URL 和内容的摩擦。将 5-6 个手动步骤转换为单次右键操作。
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll border border-gray-200 dark:border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">定制 ChatGPT 模型和工具</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        在发送内容前预配置您偏好的 AI 模型和工具，确保为您的特定需求提供最佳分析。
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll border border-gray-200 dark:border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-clock text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">节省时间自动化聊天</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        即时打开 ChatGPT，内容已预加载并准备分析。无需上下文切换或手动设置。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                    Ingest2AI 工作原理
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    几秒钟内上手，只需几次点击即可将任何网页转换为可操作的 AI 洞察。
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">1</div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">安装扩展</h3>
+                    <p class="text-gray-600 dark:text-gray-300">一键从 Chrome 网上应用店安装 Ingest2AI 扩展。</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">2</div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">导航到网页</h3>
+                    <p class="text-gray-600 dark:text-gray-300">浏览到您想要分析或摘要的任何网页。</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">3</div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">点击扩展图标</h3>
+                    <p class="text-gray-600 dark:text-gray-300">点击浏览器工具栏中的 Ingest2AI 扩展图标或右键调出上下文菜单。</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">4</div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">选择模型和工具</h3>
+                    <p class="text-gray-600 dark:text-gray-300">选择您偏好的 ChatGPT 模型并启用特定工具以获得最佳分析效果。</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">5</div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">发送到 ChatGPT</h3>
+                    <p class="text-gray-600 dark:text-gray-300">点击"发送到 ChatGPT"，使用选定的设置和内容打开新聊天。</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">6</div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">获得 AI 洞察</h3>
+                    <p class="text-gray-600 dark:text-gray-300">ChatGPT 处理网页并提供摘要、关键词和详细洞察。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                    观看 Ingest2AI 实际操作
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    了解如何轻松地将网络浏览转换为 AI 驱动的分析。
+                </p>
+            </div>
+            
+            <!-- Video Demo -->
+            <div class="max-w-4xl mx-auto mb-12 animate-on-scroll">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-black">
+                    <div class="aspect-video">
+                        <iframe 
+                            src="https://www.youtube.com/embed/OHm5Ler87NA?si=C9C0cOM2w2RDV0ea" 
+                            title="Ingest2AI 演示视频" 
+                            class="w-full h-full"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Screenshots Gallery -->
+            <div class="grid md:grid-cols-2 gap-8 animate-on-scroll">
+                <div class="relative group cursor-pointer">
+                    <div class="rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+                        <img src="./assets/Ingest2AI.png" alt="Ingest2AI 扩展界面" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 rounded-xl"></div>
+                </div>
+                
+                <div class="relative group cursor-pointer">
+                    <div class="rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+                        <img src="./assets/Ingest2AI-ChatGPT.png" alt="ChatGPT 集成" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 rounded-xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy & Security Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                    隐私与安全优先
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    您的数据保持私密。Ingest2AI 在您的浏览器中本地处理所有内容，零数据收集。
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">零数据收集</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Ingest2AI 不存储或共享您的任何数据。一切都在您的浏览器中本地进行。</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-lock text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">本地处理</h3>
+                    <p class="text-gray-600 dark:text-gray-300">所有内容处理都在您的浏览器中进行。分析过程中无第三方服务器参与。</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user-shield text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">直连 ChatGPT</h3>
+                    <p class="text-gray-600 dark:text-gray-300">内容在您选择时直接发送到 ChatGPT。无中间服务或数据记录。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-500 to-primary-600">
+        <div class="max-w-4xl mx-auto text-center animate-on-scroll">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
+                准备好变革您的阅读工作流程了吗？
+            </h2>
+            <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+                立即安装 Ingest2AI，让 ChatGPT 成为您的个人阅读助手和知识库——直接在您的浏览器中！
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                <a href="#" class="inline-flex items-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <i class="fab fa-chrome mr-3"></i>
+                    从 Chrome 网上应用店安装
+                </a>
+                <span class="text-primary-100 text-sm">免费 • 无需注册 • 隐私优先</span>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-primary-100 mb-4">需要帮助或有反馈？</p>
+                <a href="mailto:vibesparking@outlook.com" class="text-white hover:text-primary-200 transition-colors duration-200">
+                    <i class="fas fa-envelope mr-2"></i>
+                    vibesparking@outlook.com
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-gray-300 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-6 md:mb-0">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-link text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-semibold text-white">Ingest2AI</span>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <a href="https://x.com/VibeSparking" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-primary-400 transition-colors duration-200">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="mailto:vibesparking@outlook.com" class="text-gray-400 hover:text-primary-400 transition-colors duration-200">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 灵感闪现 (VibeSparking). 保留所有权利。
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme) {
+            html.classList.toggle('dark', savedTheme === 'dark');
+        } else {
+            html.classList.toggle('dark', systemDark);
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Header scroll effect
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            
+            if (scrollY > 100) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+            
+            lastScrollY = scrollY;
+        });
+    </script>
+</body>
+</html>
