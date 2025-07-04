@@ -194,7 +194,7 @@
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-600">ChatGPT</span>
                 </h1>
                 <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
-                    通过一键 AI 分析变革您的阅读工作流程。Ingest2AI 帮助您将任何网页即时发送到 ChatGPT，用于智能摘要、关键词提取和深度洞察。
+                    通过一键 AI 分析变革您的阅读工作流程。Ingest2AI 帮助您将任何网页即时发送到 ChatGPT，使用自定义提示进行个性化摘要、关键词提取和深度洞察。
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a href="#download" class="inline-flex items-center px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
@@ -243,11 +243,11 @@
                 
                 <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll border border-gray-200 dark:border-gray-700">
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg flex items-center justify-center mb-6">
-                        <i class="fas fa-cogs text-white text-xl"></i>
+                        <i class="fas fa-edit text-white text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">定制 ChatGPT 模型和工具</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">个性化分析的自定义提示</h3>
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                        在发送内容前预配置您偏好的 AI 模型和工具，确保为您的特定需求提供最佳分析。
+                        创建和保存带有 #{title}、#{url} 和 #{description} 等变量的自定义提示模板，每次都能从 ChatGPT 获得您所需的精确分析类型。
                     </p>
                 </div>
                 
@@ -259,6 +259,91 @@
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
                         即时打开 ChatGPT，内容已预加载并准备分析。无需上下文切换或手动设置。
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Prompts Showcase Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                    个性化您的 AI 分析
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    创建适应您工作流程的自定义提示模板。使用动态变量，每次都能获得一致的个性化分析。
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-on-scroll">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">智能模板变量</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-hashtag text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{title}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">自动插入网页标题</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-link text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{url}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">包含完整的网页 URL 以提供上下文</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-align-left text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{description}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">添加页面元描述</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-globe text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{language}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">指定您选择的语言偏好</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-on-scroll">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                            <i class="fas fa-code text-primary-500 mr-2"></i>
+                            自定义提示模板示例
+                        </h4>
+                        <div class="bg-white dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-600 font-mono text-sm">
+                            <div class="text-gray-600 dark:text-gray-400 mb-2">// 研究分析模板</div>
+                            <div class="text-gray-800 dark:text-gray-200">
+                                "请分析这个网页：<span class="text-primary-500">#{title}</span><br>
+                                URL：<span class="text-primary-500">#{url}</span><br><br>
+                                
+                                重点关注：<br>
+                                1. 关键发现和洞察<br>
+                                2. 方法论或方法<br>
+                                3. 潜在局限性<br>
+                                4. 实际应用<br><br>
+                                
+                                请用<span class="text-primary-500">#{language}</span>回复并提供结构化摘要。"
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-gray-500 dark:text-gray-400">
+                            ✨ 变量会自动替换为实际的网页数据
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -297,8 +382,8 @@
                 
                 <div class="text-center animate-on-scroll">
                     <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">4</div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">选择模型和工具</h3>
-                    <p class="text-gray-600 dark:text-gray-300">选择您偏好的 ChatGPT 模型并启用特定工具以获得最佳分析效果。</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">自定义提示和设置</h3>
+                    <p class="text-gray-600 dark:text-gray-300">配置您的自定义提示模板和首选的 ChatGPT 模型，获得符合您特定需求的个性化分析。</p>
                 </div>
                 
                 <div class="text-center animate-on-scroll">
