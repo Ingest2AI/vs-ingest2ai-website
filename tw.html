@@ -194,7 +194,7 @@
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-600">ChatGPT</span>
                 </h1>
                 <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
-                    透過一鍵 AI 分析變革您的閱讀工作流程。Ingest2AI 幫助您使用自定義提示將任何網頁即時發送到 ChatGPT，進行個人化摘要、關鍵詞提取和深度洞察。
+                    透過一鍵 AI 分析變革您的閱讀工作流程。Ingest2AI 幫助您使用自定義提示將任何網頁即時發送到 ChatGPT，進行個人化摘要、關鍵詞提取和深度洞察。提取和分析完整網頁內容或僅選定文本。
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a href="#download" class="inline-flex items-center px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
@@ -235,19 +235,19 @@
                     <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-500 rounded-lg flex items-center justify-center mb-6">
                         <i class="fas fa-bolt text-white text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">簡化內容消化</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">智能內容提取</h3>
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                        消除複製貼上 URL 和內容的摩擦。將 5-6 個手動步驟轉換為單次右鍵操作。
+                        提取和分析完整網頁內容或僅選定文本，具備智能內容識別功能。將任何網頁內容精準轉化為可操作的 AI 洞察。
                     </p>
                 </div>
                 
                 <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll border border-gray-200 dark:border-gray-700">
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg flex items-center justify-center mb-6">
-                        <i class="fas fa-cogs text-white text-xl"></i>
+                        <i class="fas fa-edit text-white text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">客製化 ChatGPT 模型和工具</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">靈活的內容選擇</h3>
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                        在發送內容前預配置您偏好的 AI 模型和工具，確保為您的特定需求提供最佳分析。
+                        選擇分析整個網頁或專注於特定文本選擇。使用 #{title}、#{url} 和 #{description} 等變量創建自定義提示模板，進行個性化分析。
                     </p>
                 </div>
                 
@@ -259,6 +259,102 @@
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
                         即時開啟 ChatGPT，內容已預載並準備分析。無需情境切換或手動設定。
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Prompts Showcase Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                    個性化您的 AI 分析
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    創建適應您工作流程的自定義提示模板。使用動態變量每次都能獲得一致、個性化的分析。
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-on-scroll">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">智能模板變量</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-hashtag text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{title}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">自動插入網頁標題</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-link text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{url}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">包含完整網頁 URL 作為上下文</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-align-left text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{description}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">添加頁面元描述</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-globe text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{language}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">指定您選擇的語言偏好</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-mouse-pointer text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">#{selection}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">包含您選定的文本進行重點分析</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-on-scroll">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                            <i class="fas fa-code text-primary-500 mr-2"></i>
+                            自定義提示模板範例
+                        </h4>
+                        <div class="bg-white dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-600 font-mono text-sm">
+                            <div class="text-gray-600 dark:text-gray-400 mb-2">// 研究分析模板</div>
+                            <div class="text-gray-800 dark:text-gray-200">
+                                "請分析這個網頁：<span class="text-primary-500">#{title}</span><br>
+                                URL：<span class="text-primary-500">#{url}</span><br><br>
+                                
+                                重點關注：<br>
+                                1. 關鍵發現和洞察<br>
+                                2. 方法論或途徑<br>
+                                3. 潛在限制<br>
+                                4. 實際應用<br><br>
+                                
+                                選定文本：<span class="text-primary-500">#{selection}</span><br><br>
+                                
+                                請用<span class="text-primary-500">#{language}</span>回應並提供結構化摘要。"
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-gray-500 dark:text-gray-400">
+                            ✨ 變量會自動替換為實際網頁數據
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -291,14 +387,14 @@
                 
                 <div class="text-center animate-on-scroll">
                     <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">3</div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">點擊擴充功能圖示</h3>
-                    <p class="text-gray-600 dark:text-gray-300">點擊瀏覽器工具列中的 Ingest2AI 擴充功能圖示或右鍵呼叫內容選單。</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">選擇內容並點擊擴充</h3>
+                    <p class="text-gray-600 dark:text-gray-300">可選擇特定文本，然後點擊 Ingest2AI 擴充功能圖示或右鍵呼叫內容選單來分析完整頁面或選定內容。</p>
                 </div>
                 
                 <div class="text-center animate-on-scroll">
                     <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-xl font-bold">4</div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">選擇模型和工具</h3>
-                    <p class="text-gray-600 dark:text-gray-300">選擇您偏好的 ChatGPT 模型並啟用特定工具以獲得最佳分析效果。</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">自定義提示和設定</h3>
+                    <p class="text-gray-600 dark:text-gray-300">配置您的自定義提示模板和偏好的 ChatGPT 模型，進行符合您特定需求的個性化分析。</p>
                 </div>
                 
                 <div class="text-center animate-on-scroll">
